@@ -1,0 +1,1 @@
+export const selectLeads = state => state.leads

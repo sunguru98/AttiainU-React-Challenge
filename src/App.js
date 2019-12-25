@@ -1,26 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
 
-function App() {
+import LeadsList from './components/LeadsList'
+import Badge from './components/Badge'
+
+import { connect } from 'react-redux'
+import { createStructuredSelector } from 'reselect'
+import { selectLeads } from './redux/selectors/leadsSelectors'
+import { fetchNewLead } from './redux/actions/leadsActions'
+
+const App = ({ leads, fetchNewLead }) => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <Badge leads={[...leads]} />
+      <LeadsList leads={[...leads]} />
+      <button onClick={fetchNewLead}>Get New Lead</button>
     </div>
-  );
+  )
 }
 
-export default App;
+const mapStateToProps = createStructuredSelector({
+  leads: selectLeads
+})
+
+export default connect(mapStateToProps, { fetchNewLead })(App)
